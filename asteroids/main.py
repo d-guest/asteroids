@@ -12,6 +12,11 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
+    
+
+    updatables = pygame.sprite.Group()
+    drawables = pygame.sprite.Group()
+    Player.containers = (updatables, drawables)
     player = Player(x, y)
 
     running = True
@@ -21,10 +26,11 @@ def main():
                 running = False
 
         pygame.Surface.fill(screen,(0, 0, 0))  # Clear screen with black
-        player.draw(screen)  # Draw player circle
+        for drawable in drawables:
+            drawable.draw(screen)  # Draw player
         dt = game_clock.tick(60) / 1000  # Limit to 60 FPS and get delta time in seconds
-        player.update(dt)  # Update player
+        updatables.update(dt)  # Update player
         pygame.display.flip()
-        
+
 if __name__ == "__main__":
     main()
