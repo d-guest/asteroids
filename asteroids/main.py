@@ -35,15 +35,26 @@ def main():
                 running = False
 
         pygame.Surface.fill(screen,(0, 0, 0))  # Clear screen with black
+        
         for drawable in drawables:
             drawable.draw(screen)  # Draw player
+        
         dt = game_clock.tick(60) / 1000  # Limit to 60 FPS and get delta time in seconds
         updatables.update(dt)  # Update player
+        
         for asteroid in asteroids:
             if player.check_collision(asteroid):
                 print("Collision detected!")
                 running = False
                 print("Game Over!")
+            
+        for asteroid in asteroids:
+            for shot in shots:
+                if shot.check_collision(asteroid):
+                    print("Shot hit asteroid!")
+                    asteroid.kill()
+                    shot.kill()
+
         pygame.display.flip()
 
 if __name__ == "__main__":
