@@ -1,16 +1,20 @@
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'  # Suppress pygame welcome message
+
 import pygame
 from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import * 
 from shot import *
+from logger import log_state
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     game_clock = pygame.time.Clock()
     dt = 0
-    print("Starting asteroids!")
+    print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
     x = SCREEN_WIDTH / 2
@@ -30,6 +34,7 @@ def main():
 
     running = True
     while running:
+        log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
